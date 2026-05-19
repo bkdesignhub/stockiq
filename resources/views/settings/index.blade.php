@@ -33,7 +33,7 @@
             <div class="divide-y divide-slate-100">
                 <a href="{{ route('admin.profile.edit') }}" class="block p-4 font-semibold text-slate-700 hover:bg-slate-50">Admin Profile & Password</a>
                 <a href="{{ route('purchases.index') }}" class="block p-4 font-semibold text-slate-700 hover:bg-slate-50">Purchase History</a>
-                <a href="{{ route('vendor-prices.create') }}" class="block p-4 font-semibold text-slate-700 hover:bg-slate-50">Add Vendor Price</a>
+                <a href="{{ route('vendor-prices.index') }}" class="block p-4 font-semibold text-slate-700 hover:bg-slate-50">Vendor Price Comparison</a>
                 <a href="{{ route('purchases.create') }}" class="block p-4 font-semibold text-slate-700 hover:bg-slate-50">Purchase Entry</a>
             </div>
         </article>

@@ -39,6 +39,25 @@
                     @enderror
                 </div>
 
+                <div class="mt-4 rounded-xl border border-blue-100 bg-blue-50 p-4">
+                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div class="text-sm">
+                            <p class="font-extrabold text-slate-950">Demo Login</p>
+                            <p class="mt-1 font-semibold text-slate-600">User: bharath@nexsy.in</p>
+                            <p class="font-semibold text-slate-600">Password: StockIQ@2026</p>
+                        </div>
+                        <button
+                            type="button"
+                            id="demo-login-fill"
+                            class="btn-secondary shrink-0 border-blue-200 text-blue-700 hover:bg-white"
+                            data-email="bharath@nexsy.in"
+                            data-password="StockIQ@2026"
+                        >
+                            Autofill
+                        </button>
+                    </div>
+                </div>
+
                 <label class="mt-4 flex items-center gap-2 text-sm font-medium text-slate-600">
                     <input type="checkbox" name="remember" value="1" class="h-4 w-4 rounded border-slate-300 p-0 shadow-none">
                     Remember this device
@@ -48,5 +67,20 @@
             </form>
         </section>
     </main>
+
+    <script>
+        document.getElementById('demo-login-fill')?.addEventListener('click', function () {
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+
+            if (! email || ! password) {
+                return;
+            }
+
+            email.value = this.dataset.email || '';
+            password.value = this.dataset.password || '';
+            password.focus();
+        });
+    </script>
 </body>
 </html>

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\PurchaseItem;
 use App\Models\Vendor;
 
 class DashboardController extends Controller
 {
     public function __invoke()
     {
-        $products = Product::with(['productCategory', 'brand', 'purchaseItems', 'stockMovements', 'vendorPrices.vendor'])->get();
+        $products = Product::with(['productCategory', 'brand', 'purchaseItems', 'stockMovements'])->get();
         $stockWorth = $products->sum(fn (Product $product) => $product->stock_worth);
         $expectedProfit = $products->sum(fn (Product $product) => $product->expected_profit);
         $expectedSellingValue = $stockWorth + $expectedProfit;
@@ -23,25 +24,45 @@ class DashboardController extends Controller
             ->sortBy('margin')
             ->take(5);
 
-        $vendorRows = $products->map(function (Product $product) {
-            $prices = $product->vendorPrices->sortBy('price')->values();
-            $best = $prices->first();
+        $vendorRows = PurchaseItem::with(['product', 'purchase.vendor'])
+            ->whereHas('purchase.vendor')
+            ->get()
+            ->groupBy('product_id')
+            ->map(function ($items) {
+                $product = $items->first()->product;
+                $vendorRows = $items
+                    ->groupBy(fn (PurchaseItem $item) => $item->purchase->vendor_id)
+                    ->map(function ($vendorItems) {
+                        $latest = $vendorItems
+                            ->sortByDesc(fn (PurchaseItem $item) => $item->purchase->purchase_date?->timestamp ?? 0)
+                            ->first();
 
-            if (! $best) {
-                return null;
-            }
+                        return [
+                            'vendor' => $latest->purchase->vendor,
+                            'latest_price' => (float) $latest->unit_cost,
+                        ];
+                    })
+                    ->values();
 
-            $averagePrice = $prices->avg('price') ?: 0;
+                $best = $vendorRows->sortBy('latest_price')->first();
 
-            return [
-                'product' => $product->name,
-                'vendor' => $best->vendor->name,
-                'best' => (float) $best->price,
-                'avg' => (float) $averagePrice,
-                'diff' => max(0, (float) $averagePrice - (float) $best->price),
-                'margin' => max(0, (float) $product->selling_price - (float) $best->price),
-            ];
-        })->filter()->values();
+                if (! $product || ! $best) {
+                    return null;
+                }
+
+                $averagePrice = $vendorRows->avg('latest_price') ?: 0;
+
+                return [
+                    'product' => $product->name,
+                    'vendor' => $best['vendor']->name,
+                    'best' => (float) $best['latest_price'],
+                    'avg' => (float) $averagePrice,
+                    'diff' => max(0, (float) $averagePrice - (float) $best['latest_price']),
+                    'margin' => max(0, (float) $product->selling_price - (float) $best['latest_price']),
+                ];
+            })
+            ->filter()
+            ->values();
 
         $categoryBreakdown = $products
             ->groupBy(fn (Product $product) => $product->productCategory?->name ?: 'Uncategorized')

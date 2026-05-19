@@ -29,8 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('brands', BrandController::class)->except(['show']);
     Route::resource('vendors', VendorController::class)->except(['show']);
     Route::resource('vendor-prices', VendorProductPriceController::class)
-        ->parameters(['vendor-prices' => 'vendorPrice'])
-        ->except(['show']);
+        ->only(['index']);
     Route::resource('purchases', PurchaseController::class)->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
     Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
     Route::post('stocks', [StockController::class, 'store'])->name('stocks.store');

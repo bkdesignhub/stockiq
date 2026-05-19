@@ -136,7 +136,7 @@
                             <td class="font-semibold text-green-700">Rs. {{ number_format($row['diff'], 2) }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="5">Add vendor prices to compare suppliers.</td></tr>
+                        <tr><td colspan="5">Add purchases to compare supplier prices.</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -301,7 +301,7 @@
                     <p class="font-bold text-green-700">Rs. {{ number_format($row['best'], 2) }}</p>
                 </div>
             @empty
-                <p class="p-5 text-sm font-medium text-slate-500">No vendor prices yet.</p>
+                <p class="p-5 text-sm font-medium text-slate-500">No purchase prices yet.</p>
             @endforelse
         </div>
     </section>

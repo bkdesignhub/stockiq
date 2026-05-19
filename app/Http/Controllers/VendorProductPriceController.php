@@ -3,73 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Vendor;
-use App\Models\VendorProductPrice;
+use App\Models\PurchaseItem;
 use Illuminate\Http\Request;
 
 class VendorProductPriceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $selectedProductId = $request->integer('product_id') ?: null;
+        $products = Product::orderBy('name')->get();
+        $selectedProduct = $selectedProductId
+            ? Product::find($selectedProductId)
+            : null;
+
+        $comparisonRows = collect();
+
+        if ($selectedProduct) {
+            $comparisonRows = PurchaseItem::with(['purchase.vendor'])
+                ->where('product_id', $selectedProduct->id)
+                ->whereHas('purchase.vendor')
+                ->get()
+                ->groupBy(fn (PurchaseItem $item) => $item->purchase->vendor_id)
+                ->map(function ($items) use ($selectedProduct) {
+                    $latest = $items
+                        ->sortByDesc(fn (PurchaseItem $item) => $item->purchase->purchase_date?->timestamp ?? 0)
+                        ->first();
+                    $lowest = $items->sortBy('unit_cost')->first();
+                    $highest = $items->sortByDesc('unit_cost')->first();
+                    $latestPrice = (float) $latest->unit_cost;
+                    $sellingPrice = (float) $selectedProduct->selling_price;
+
+                    return [
+                        'vendor' => $latest->purchase->vendor,
+                        'latest_price' => $latestPrice,
+                        'lowest_price' => (float) $lowest->unit_cost,
+                        'highest_price' => (float) $highest->unit_cost,
+                        'average_price' => (float) $items->avg('unit_cost'),
+                        'selling_price' => $sellingPrice,
+                        'margin' => $sellingPrice - $latestPrice,
+                        'margin_percent' => $latestPrice > 0 ? (($sellingPrice - $latestPrice) / $latestPrice) * 100 : 0,
+                        'quantity' => (int) $items->sum('quantity'),
+                        'purchase_count' => $items->count(),
+                        'last_purchase_date' => $latest->purchase->purchase_date,
+                    ];
+                })
+                ->sortBy('latest_price')
+                ->values();
+        }
+
+        $bestRow = $comparisonRows->first();
+        $highestRow = $comparisonRows->sortByDesc('latest_price')->first();
+
         return view('vendor-prices.index', [
-            'prices' => VendorProductPrice::with(['vendor', 'product'])->orderBy('price')->paginate(14),
-            'bestPrices' => Product::with('vendorPrices.vendor')->get()->map(function (Product $product) {
-                return ['product' => $product, 'best' => $product->vendorPrices->sortBy('price')->first()];
-            })->filter(fn ($row) => $row['best']),
-        ]);
-    }
-
-    public function create()
-    {
-        return view('vendor-prices.create', $this->formData(new VendorProductPrice()));
-    }
-
-    public function store(Request $request)
-    {
-        VendorProductPrice::updateOrCreate(
-            $request->only(['vendor_id', 'product_id']),
-            $this->validated($request)
-        );
-
-        return redirect()->route('vendor-prices.index')->with('status', 'Vendor price saved.');
-    }
-
-    public function edit(VendorProductPrice $vendorPrice)
-    {
-        return view('vendor-prices.edit', $this->formData($vendorPrice));
-    }
-
-    public function update(Request $request, VendorProductPrice $vendorPrice)
-    {
-        $vendorPrice->update($this->validated($request));
-
-        return redirect()->route('vendor-prices.index')->with('status', 'Vendor price updated.');
-    }
-
-    public function destroy(VendorProductPrice $vendorPrice)
-    {
-        $vendorPrice->delete();
-
-        return redirect()->route('vendor-prices.index')->with('status', 'Vendor price deleted.');
-    }
-
-    private function formData(VendorProductPrice $vendorPrice): array
-    {
-        return [
-            'vendorPrice' => $vendorPrice,
-            'vendors' => Vendor::orderBy('name')->get(),
-            'products' => Product::orderBy('name')->get(),
-        ];
-    }
-
-    private function validated(Request $request): array
-    {
-        return $request->validate([
-            'vendor_id' => ['required', 'exists:vendors,id'],
-            'product_id' => ['required', 'exists:products,id'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'lead_time_days' => ['required', 'integer', 'min:0'],
-            'effective_from' => ['nullable', 'date'],
+            'comparisonRows' => $comparisonRows,
+            'products' => $products,
+            'selectedProduct' => $selectedProduct,
+            'selectedProductId' => $selectedProductId,
+            'bestRow' => $bestRow,
+            'spread' => ($bestRow && $highestRow) ? max(0, $highestRow['latest_price'] - $bestRow['latest_price']) : 0,
         ]);
     }
 }

@@ -26,19 +26,34 @@
         <article class="app-panel overflow-hidden">
             <div class="app-panel-header">
                 <h2 class="font-bold text-slate-950">Compare Vendors</h2>
-                <a href="{{ route('vendor-prices.index') }}" class="text-sm font-bold text-blue-700">View All</a>
+                <a href="{{ route('vendor-prices.index', ['product_id' => $product->id]) }}" class="text-sm font-bold text-blue-700">View All</a>
             </div>
             <div class="divide-y divide-slate-100">
-                @forelse ($product->vendorPrices->sortBy('price') as $price)
+                @php
+                    $vendorCosts = $product->purchaseItems
+                        ->filter(fn ($item) => $item->purchase?->vendor)
+                        ->groupBy(fn ($item) => $item->purchase->vendor_id)
+                        ->map(function ($items) {
+                            $latest = $items->sortByDesc(fn ($item) => $item->purchase->purchase_date?->timestamp ?? 0)->first();
+
+                            return [
+                                'vendor' => $latest->purchase->vendor,
+                                'price' => (float) $latest->unit_cost,
+                                'date' => $latest->purchase->purchase_date,
+                            ];
+                        })
+                        ->sortBy('price');
+                @endphp
+                @forelse ($vendorCosts as $price)
                     <div class="flex items-center justify-between p-4">
                         <div>
-                            <p class="font-semibold text-slate-950">{{ $price->vendor->name }}</p>
-                            <p class="text-xs font-medium text-slate-500">{{ $price->lead_time_days }} day lead time</p>
+                            <p class="font-semibold text-slate-950">{{ $price['vendor']->name }}</p>
+                            <p class="text-xs font-medium text-slate-500">Last purchase {{ optional($price['date'])->format('d M Y') ?: '-' }}</p>
                         </div>
-                        <p class="font-bold {{ $loop->first ? 'text-green-700' : 'text-slate-950' }}">Rs. {{ number_format($price->price, 2) }}</p>
+                        <p class="font-bold {{ $loop->first ? 'text-green-700' : 'text-slate-950' }}">Rs. {{ number_format($price['price'], 2) }}</p>
                     </div>
                 @empty
-                    <p class="p-5 text-sm font-medium text-slate-500">No vendor prices recorded for this product.</p>
+                    <p class="p-5 text-sm font-medium text-slate-500">No purchase prices recorded for this product.</p>
                 @endforelse
             </div>
         </article>

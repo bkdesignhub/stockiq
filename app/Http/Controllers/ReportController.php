@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Purchase;
-use App\Models\VendorProductPrice;
 
 class ReportController extends Controller
 {
     public function index()
     {
-        $products = Product::with(['purchaseItems', 'stockMovements', 'vendorPrices.vendor'])->get();
+        $products = Product::with(['purchaseItems', 'stockMovements'])->get();
 
         return view('reports.index', [
             'stockWorth' => $products->sum(fn (Product $product) => $product->stock_worth),
@@ -23,7 +22,6 @@ class ReportController extends Controller
                 ->groupBy('vendor_id')
                 ->orderByDesc('total_spend')
                 ->get(),
-            'priceSpread' => VendorProductPrice::with(['product', 'vendor'])->get()->groupBy('product_id'),
         ]);
     }
 
