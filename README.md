@@ -1,59 +1,271 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📦 StockIQ — Smart Inventory & Billing ERP
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+## 🚀 About StockIQ
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**StockIQ** is a smart **Inventory, Billing, Wholesale, and Distributor Management ERP** built for small and medium businesses.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+It helps shop owners, wholesalers, FMCG distributors, grocery stores, retail suppliers, and warehouse-based businesses manage products, stock, invoices, customers, suppliers, purchases, and sales from one simple dashboard.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+> **Goal:** Replace manual notebooks and Excel stock tracking with a modern, simple, and scalable digital system.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🌐 Live Demo
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+🔗 **Live Website:** http://stockiq.bugy.in/
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## ✨ Key Features
 
-### Premium Partners
+### 📦 Inventory Management
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+* Product stock management
+* Low stock alerts
+* Category-wise product organization
+* Stock in / stock out tracking
+* Warehouse-based inventory control
 
-## Contributing
+### 🧾 Billing & Invoice System
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* Quick invoice generation
+* Customer billing records
+* GST-ready billing structure
+* Printable invoice format
+* Sales history tracking
 
-## Code of Conduct
+### 🛒 Purchase Management
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* Supplier purchase entries
+* Purchase history
+* Product cost tracking
+* Supplier-wise purchase reports
 
-## Security Vulnerabilities
+### 👥 Customer & Supplier Management
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* Customer database
+* Supplier database
+* Contact and billing details
+* Purchase and sales relationship tracking
 
-## License
+### 📊 Dashboard & Reports
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* Total sales overview
+* Total purchase overview
+* Stock summary
+* Low stock products
+* Revenue and business insights
+
+### 🏪 Best For
+
+* Grocery stores
+* FMCG wholesalers
+* Retail distributors
+* Small warehouses
+* Medical and personal care distributors
+* Department stores
+* Supermarkets
+* Local wholesale businesses
+
+---
+
+## 🧠 Business Use Case
+
+StockIQ is designed for businesses that buy products in bulk from manufacturers, wholesalers, or distributors and sell them to retail shops.
+
+Example workflow:
+
+```text
+Manufacturer / Main Wholesaler
+        ↓
+Distributor / StockIQ User
+        ↓
+Retail Shops / Grocery Stores / Medical Shops
+        ↓
+Invoice + Stock Update + Report
+```
+
+---
+
+## 🛠 Tech Stack
+
+---
+
+## 📸 Screenshots
+
+> Add your project screenshots inside a `/screenshots` folder and replace the image paths below.
+
+---
+
+## 📁 Suggested Project Structure
+
+```text
+stockiq/
+├── app/
+│   ├── Http/
+│   ├── Models/
+│   └── Services/
+├── database/
+│   ├── migrations/
+│   └── seeders/
+├── resources/
+│   ├── views/
+│   ├── css/
+│   └── js/
+├── routes/
+│   └── web.php
+├── public/
+├── screenshots/
+└── README.md
+```
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/bkdesignhub/stockiq.git
+```
+
+```bash
+cd stockiq
+```
+
+```bash
+composer install
+```
+
+```bash
+cp .env.example .env
+```
+
+```bash
+php artisan key:generate
+```
+
+Update your `.env` database details:
+
+```env
+DB_DATABASE=stockiq
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Run migrations:
+
+```bash
+php artisan migrate
+```
+
+Start development server:
+
+```bash
+php artisan serve
+```
+
+---
+
+## 🔐 Admin Modules
+
+```text
+✅ Dashboard
+✅ Products
+✅ Categories
+✅ Stock Management
+✅ Customers
+✅ Suppliers
+✅ Purchases
+✅ Sales
+✅ Billing
+✅ Reports
+✅ Settings
+```
+
+---
+
+## 📈 Future Upgrade Ideas
+
+* Barcode scanning
+* GST invoice export
+* WhatsApp invoice sharing
+* Multi-warehouse support
+* Retail shop order portal
+* Distributor mobile app
+* Expense tracking
+* Profit and loss report
+* Role-based staff access
+* SaaS subscription version
+
+---
+
+## 📌 Product Roadmap
+
+### ✅ Completed
+
+* Inventory Management
+* Product & Category Management
+* Stock In / Stock Out Tracking
+* Customer Management
+* Supplier Management
+* Purchase Management
+* Sales Management
+* Billing & Invoice Generation
+* Dashboard & Business Overview
+* Basic Reports & Analytics
+
+### 🚧 In Progress
+
+* Enhanced Sales Reports
+* Low Stock Notifications
+* Improved Invoice Printing Layout
+* Performance Optimization
+
+### 🔜 Upcoming Features
+
+* Barcode & QR Code Scanning
+* GST-Compliant Invoice Export
+* WhatsApp Invoice Sharing
+* Multi-Warehouse Management
+* Role-Based User Access Control
+* Expense Management Module
+* Profit & Loss Reporting
+* Advanced Inventory Analytics
+* Customer Credit & Payment Tracking
+* Mobile Responsive Enhancements
+
+### 🎯 Long-Term Vision
+
+* Mobile Application (Android & iOS)
+* SaaS Multi-Tenant Version
+* Distributor & Retailer Order Portal
+* API Integrations
+* E-commerce Integration
+* AI-Based Demand Forecasting
+* Automated Reorder Suggestions
+* Cloud Backup & Data Synchronization
+
+- [x] Inventory management
+- [x] Billing workflow
+- [x] Customer management
+- [x] Supplier management
+- [x] Purchase tracking
+- [x] Sales tracking
+- [ ] Barcode scanner
+- [ ] WhatsApp invoice
+- [ ] Advanced analytics
+- [ ] SaaS multi-tenant version
+
+---
+
+## 👨‍💻 Developer
+
+**Bharath Kumar**
+Full Stack Laravel Developer | SaaS Product Builder | UI/UX Designer
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a ⭐ on GitHub.
