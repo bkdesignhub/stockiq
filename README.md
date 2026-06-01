@@ -4,17 +4,19 @@
 
 ## 🚀 About StockIQ
 
-**StockIQ** is a smart **Inventory, Billing, Wholesale, and Distributor Management ERP** built for small and medium businesses.
+**StockIQ** is a smart **Inventory, Billing, Wholesale, and Distributor Management ERP** built for small and medium-sized businesses.
 
-It helps shop owners, wholesalers, FMCG distributors, grocery stores, retail suppliers, and warehouse-based businesses manage products, stock, invoices, customers, suppliers, purchases, and sales from one simple dashboard.
+It helps shop owners, wholesalers, FMCG distributors, grocery stores, retail suppliers, and warehouse-based businesses manage products, inventory, invoices, customers, suppliers, purchases, and sales from a single dashboard.
 
-> **Goal:** Replace manual notebooks and Excel stock tracking with a modern, simple, and scalable digital system.
+> **Goal:** Replace manual notebooks and Excel-based stock tracking with a modern, scalable, and easy-to-use digital inventory management solution.
 
 ---
 
 ## 🌐 Live Demo
 
 🔗 **Live Website:** http://stockiq.bugy.in/
+
+🔗 **GitHub Repository:** https://github.com/bkdesignhub/stockiq
 
 ---
 
@@ -73,7 +75,7 @@ It helps shop owners, wholesalers, FMCG distributors, grocery stores, retail sup
 
 ## 🧠 Business Use Case
 
-StockIQ is designed for businesses that buy products in bulk from manufacturers, wholesalers, or distributors and sell them to retail shops.
+StockIQ is designed for businesses that purchase products in bulk from manufacturers, wholesalers, or distributors and sell them to retail shops.
 
 Example workflow:
 
@@ -91,11 +93,25 @@ Invoice + Stock Update + Report
 
 ## 🛠 Tech Stack
 
+* Laravel
+* PHP
+* MySQL
+* Blade Templates
+* Bootstrap
+* JavaScript
+* HTML5 & CSS3
+
 ---
 
 ## 📸 Screenshots
 
-> Add your project screenshots inside a `/screenshots` folder and replace the image paths below.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/bkdesignhub/stockiq/main/Screenshot%202026-06-01%20115358.png" width="900" alt="StockIQ Dashboard Screenshot">
+</p>
+
+### Dashboard Overview
+
+The following screenshot showcases the StockIQ dashboard interface, providing a complete overview of inventory, sales, purchases, and business operations.
 
 ---
 
@@ -125,27 +141,37 @@ stockiq/
 
 ## ⚙️ Installation
 
+Clone the repository:
+
 ```bash
 git clone https://github.com/bkdesignhub/stockiq.git
 ```
+
+Navigate to the project directory:
 
 ```bash
 cd stockiq
 ```
 
+Install dependencies:
+
 ```bash
 composer install
 ```
+
+Create environment file:
 
 ```bash
 cp .env.example .env
 ```
 
+Generate application key:
+
 ```bash
 php artisan key:generate
 ```
 
-Update your `.env` database details:
+Update your `.env` database configuration:
 
 ```env
 DB_DATABASE=stockiq
@@ -153,13 +179,13 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-Run migrations:
+Run database migrations:
 
 ```bash
 php artisan migrate
 ```
 
-Start development server:
+Start the development server:
 
 ```bash
 php artisan serve
@@ -192,9 +218,9 @@ php artisan serve
 * WhatsApp invoice sharing
 * Multi-warehouse support
 * Retail shop order portal
-* Distributor mobile app
+* Distributor mobile application
 * Expense tracking
-* Profit and loss report
+* Profit and loss reporting
 * Role-based staff access
 * SaaS subscription version
 
@@ -246,16 +272,18 @@ php artisan serve
 * Automated Reorder Suggestions
 * Cloud Backup & Data Synchronization
 
-- [x] Inventory management
-- [x] Billing workflow
-- [x] Customer management
-- [x] Supplier management
-- [x] Purchase tracking
-- [x] Sales tracking
-- [ ] Barcode scanner
-- [ ] WhatsApp invoice
-- [ ] Advanced analytics
-- [ ] SaaS multi-tenant version
+### Progress Checklist
+
+* [x] Inventory Management
+* [x] Billing Workflow
+* [x] Customer Management
+* [x] Supplier Management
+* [x] Purchase Tracking
+* [x] Sales Tracking
+* [ ] Barcode Scanner
+* [ ] WhatsApp Invoice Integration
+* [ ] Advanced Analytics
+* [ ] SaaS Multi-Tenant Version
 
 ---
 
@@ -264,8 +292,16 @@ php artisan serve
 **Bharath Kumar**
 Full Stack Laravel Developer | SaaS Product Builder | UI/UX Designer
 
+🌐 Portfolio: https://bugy.in/
+
+📧 Email: [bkdesigner0@gmail.com](mailto:bkdesigner0@gmail.com)
+
+🐙 GitHub: https://github.com/bkdesignhub
+
 ---
 
 ## ⭐ Support
 
-If you like this project, give it a ⭐ on GitHub.
+If you like this project, please consider giving it a ⭐ on GitHub and sharing it with others.
+
+Thank you for supporting **StockIQ**! 🚀
